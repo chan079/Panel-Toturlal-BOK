@@ -1,5 +1,12 @@
 % 코드
 
+자료를 다운로드 받지 않고 사용하려면 Stata에서 예를 들어 다음과 같이
+명령함(마지막 `testfe`를 적절한 파일로 바꿈)
+
+```stata
+use https://github.com/chan079/panelbook/raw/main/data/testfe, clear
+```
+
 # 1. 도입
 
 ## 1.1 Stata 연습
@@ -27,8 +34,8 @@ reg deathrate smoke if year==2010
 
 ### 연습 1.9
 
-아래에서 `*` 다음은 코멘트. `*` 대신에 `//`를 사용하면 `do` 파일에서는 괜찮지만 직접 명령창에
-입력하면 오류 발생.
+아래에서 `*` 다음은 코멘트. `*` 대신에 `//`를 사용하면 `do` 파일에서는
+괜찮지만 직접 명령창에 입력하면 오류 발생.
 
 ```stata
 * continued
@@ -100,7 +107,7 @@ use wage2, clear
 reg hours lwage age married black
 ```
 
-### 1.21 앞
+### 연습 1.21 앞
 
 ```stata
 use death1, clear
@@ -109,7 +116,7 @@ reg deathrate drink smoke aged, vce(r)
 reg deathrate drink smoke aged, vce(cl region)
 ```
 
-### 1.23
+### 연습 1.23
 
 ```stata
 use death1, clear
@@ -118,10 +125,10 @@ reg deathrate drink smoke aged i.year, vce(r)
 reg deathrate drink smoke aged i.year, vce(cl region)
 ```
 
-### 1.25
+### 연습 1.25
 
-아래에서, `do` 파일에서 `//` 다음은 코멘트 문이다. 명령창에 입력하면
-오류 발생.
+아래 `do` 파일 내용에서 `//` 다음은 코멘트 문이다. `//`를 명령창에
+직접 입력하면 오류가 발생하므로 이를 제외하고 복사.
 
 ```stata
 import excel using munnell90.xls, firstrow clear
@@ -146,7 +153,13 @@ foreach v of varlist gsp hwy water util pc emp {
 save munnell90, replace
 ```
 
-### 2.2 앞
+# 2. 선형패널모형과 추정
+
+## 2.1 선형패널모형
+
+## 2.2 집단 간 회귀, 통합 회귀, 집단 내 회귀
+
+### 연습 2.2 앞
 
 ```stata
 use gasoline, clear
@@ -155,7 +168,7 @@ d
 xtreg lgaspcar lincomep lrpmg lcarpcap, be
 ```
 
-### 2.4
+### 연습 2.4
 
 ```stata
 use wdi5bal, clear
@@ -166,21 +179,27 @@ xtreg sav age0_19 age20_29 age65over lifeexp i.year, be
 xtdescribe
 ```
 
-### 2.6 앞
+### 연습 2.6 앞
 
 ```stata
 use gasoline, clear
 reg lgaspcar lincomep lrpmg lcarpcap i.year
 ```
 
-### 2.8 앞
+### 연습 2.7
+
+```stata
+reg lgaspcar lincomep lrpmg lcarpcap, vce(cl country)
+```
+
+### 연습 2.8 앞
 
 ```stata
 use gasoline, clear
 xtreg lgaspcar lincomep lrpmg lcarpcap i.year, fe
 ```
 
-### 2.13
+### 연습 2.13 앞
 
 ```stata
 use gasoline, clear
@@ -198,7 +217,7 @@ est store be
 est tab ols re fe be, b se
 ```
 
-### 2.16
+### 연습 2.16
 
 ```stata
 clear all
@@ -223,14 +242,16 @@ drop *_0
 reg y x z x_* z_*
 ```
 
-### 2.17 앞
+## 2.3 임의효과 모형과 고정효과 모형
+
+### 연습 2.17 앞
 
 ```stata
 use gasoline, clear
 xtreg lgaspcar lincomep lrpmg lcarpcap i.year, re
 ```
 
-### 2.23
+### 연습 2.23
 
 ```stata
 use death1, clear
@@ -241,15 +262,15 @@ reg lndeathrate lnsmoke lnaged i.year, vce(cl region)
 xtreg lndeathrate lnsmoke lnaged i.year, re vce(r)
 ```
 
-### 2.24
+### 연습 2.24
 
 ```stata
-// continued
+* continued
 reg d.(lndeathrate lnsmoke lnaged) i.year, vce(cl region)
 xtreg lndeathrate lnsmoke lnaged i.year, fe vce(r)
 ```
 
-### 2.25
+### 연습 2.25
 
 ```stata
 use death1, clear
@@ -260,14 +281,14 @@ xtreg deathrate smoke aged, fe
 xtreg deathrate smoke aged i.year, fe
 ```
 
-### 2.26
+### 연습 2.26
 
 ```stata
-// continued
+* continued
 reg d.(deathrate smoke aged) i.year
 ```
 
-### 2.27 앞
+### 연습 2.27 앞
 
 ```stata
 use gasoline, clear
@@ -275,7 +296,7 @@ xtreg lgaspcar lincomep lrpmg lcarpcap i.year, fe
 areg lgaspcar lincomep lrpmg lcarpcap i.year, a(country)
 ```
 
-### 2.29 앞
+### 연습 2.29 앞
 
 ```stata
 use testfe, clear
@@ -285,7 +306,7 @@ xtreg y x1 x2 z1, re
 hausman fe .
 ```
 
-### 2.30
+### 연습 2.30
 
 ```stata
 use hausman-odd, clear
@@ -295,7 +316,7 @@ xtreg y x1 x2 z1, re
 hausman fe .
 ```
 
-### 2.31
+### 연습 2.31
 
 ```stata
 use testfe, clear
@@ -306,7 +327,7 @@ est store re
 hausman fe re
 ```
 
-### 2.32
+### 연습 2.32
 
 ```stata
 use testfe, clear
@@ -321,13 +342,13 @@ reg y x1 x2 z1 bar_*, vce(cl id)
 testparm bar_*
 ```
 
-### 2.33
+### 연습 2.33
 
 ```stata
 xtreg y x1 x2 z1, be
 ```
 
-### 2.37
+### 연습 2.37
 
 ```stata
 use munnell90, clear
@@ -361,7 +382,7 @@ xtreg $model *_bar i.yr, re vce(r)
 testparm *_bar
 ```
 
-### 2.38
+### 연습 2.38
 
 ```stata
 use ict, clear
@@ -393,7 +414,9 @@ reg lsales lcap lemp foreign kospi i.sector i.year *_bar, vce(cl id)
 testparm *_bar
 ```
 
-### 2.39 앞
+## 2.4 Population-Averaged 모형
+
+### 연습 2.39 앞
 
 ```stata
 use gasoline, clear
@@ -404,7 +427,7 @@ xtreg `model', re
 xtreg `model', pa c(exc)
 ```
 
-### 2.44 앞
+### 연습 2.44 앞
 
 ```stata
 use gasoline, clear
@@ -420,7 +443,7 @@ est store pols
 est tab fe pols re be, b se stats(r2 r2_w r2_o r2_b)
 ```
 
-### 2.5.2절 첫 번째 부분
+### 2.5.2절 시작 부분
 
 ```stata
 use didex, clear
@@ -428,14 +451,14 @@ xtreg y d, fe vce(r)
 xtreg y d i.year, fe vce(r)
 ```
 
-### 2.50 앞 (2.5.2절 두 번째 부분)
+### 연습 2.49 앞 (2.5.2절 두 번째 부분)
 
 ```stata
 use didex, clear
 reg y part##after, vce(cl id)
 ```
 
-### 2.52
+### 연습 2.51
 
 ```stata
 use didexunb, clear
@@ -443,7 +466,7 @@ xtdes
 xtreg y d i.year, fe
 ```
 
-### 2.53
+### 연습 2.52
 
 앞에서 계속
 
@@ -452,7 +475,38 @@ reg y part##after, vce(cl id)
 xtreg y d i.year, fe vce(r)
 ```
 
-### 2.65 앞
+### 연습 2.57
+
+```stata
+webuse hospdd, clear
+didregress (satis) (procedure), group(hospital) time(month)
+estat trendplots, omeans
+estat ptrends
+estat grangerplot
+gen trgrp = hospital <= 18
+gen mon1 = month-0.06
+gen mon2 = month+0.06
+twoway (scatter satis mon1 if !trgrp) ///
+  (scatter satis mon2 if trgrp & procedure==1) ///
+  (scatter satis mon2 if trgrp & procedure==0)
+```
+
+위에서 `///`는 줄바꿈을 뜻함. `do` 파일에서는 문제가 없으나, 명령창에 직접 입력할 때에는 `///`와 줄바꿈을 없애고 한 줄로 할 것. `twoway (scatter satis mon1 if !trgrp) (scatter satis mon2 if trgrp & procedure==1) (scatter satis mon2 if trgrp & procedure==0)`
+
+### 연습 2.58 앞
+
+```stata
+use https://friosavila.github.io/playingwithstata/drdid/mpdta.dta, clear
+table year first
+xtset county year
+gen d = treat & year >= first_treat
+xtdidregress (lemp) (d), group(countyreal) time(year)
+estat bdecomp
+xthdidregress aipw (lemp lpop) (d lpop), group(countyreal)
+estat aggreg, dynamic
+```
+
+### 연습 2.66 앞
 
 아래에서 줄 마지막의 `///`는 ‘다음 줄로 계속됨’을 뜻한다. `do`
 파일 내에서는 작동하나 직접 명령창에 입력하면 오류가 발생할 것이다.
@@ -464,16 +518,22 @@ xthtaylor lwage wks south smsa ms exp exp2 occ ind union fem blk ed, ///
    endog(exp exp2 occ ind union ed)
 ```
 
-### 4.4 다음, 4.5 앞
+# 4. 선형 동적 패널 모형의 추정
+
+## 4.1 선형 동적 패널 모형
+
+## 4.2 고정효과 동태적 패널 모형의 GMM 추정
+
+### 연습 4.4 다음, 연습 4.5 앞
 
 ```stata
 use ajry08five, clear
 xtabond dem yr3-yr11 if sample==1, pre(inc_1) vce(r) nocons
 ```
 
-위 내용을 pdf 파일에서 복사/붙여넣기 하면 무슨 일이 발생하는가?
+위 내용을 여기서 복사/붙여넣기 하지 않고 pdf 파일에서 복사/붙여넣기 하면 무슨 일이 발생하는가?
 
-### 4.7 앞
+### 연습 4.7 앞
 
 ```stata
 use ajry08five, clear
@@ -481,7 +541,7 @@ qui xtabond dem yr3-yr11 if sample==1, pre(inc_1) nocons two
 estat sargan
 ```
 
-### 4.8 앞
+### 연습 4.8 앞
 
 ```stata
 use ajry08five, clear
@@ -489,7 +549,7 @@ qui xtabond dem yr3-yr11 if sample==1, pre(inc_1) nocons two
 estat abond
 ```
 
-### 4.14
+### 연습 4.14 앞
 
 ```stata
 set more off
@@ -510,7 +570,9 @@ xtabond y
 set more on
 ```
 
-### 4.3.2절 (4.16 앞)
+## 4.3 System GMM
+
+### 4.3.2절 (연습 4.16 앞)
 
 ```stata
 use unitroot, clear
@@ -518,14 +580,14 @@ xtabond y
 xtdpdsys y
 ```
 
-### 4.18 앞
+### 연습 4.18 앞
 
 ```stata
 use ajry08five, clear
 xtdpdsys dem yr3-yr11 if sample==1, pre(inc_1) vce(r) nocons
 ```
 
-### 4.21
+### 연습 4.21
 
 ```stata
 use growth, clear
@@ -545,7 +607,7 @@ xtdpdsys y n yr3-yr26, pre(s) two
 estat sargan
 ```
 
-### 4.22
+### 연습 4.22
 
 ```stata
 use growth, clear
@@ -559,21 +621,23 @@ estat abond
 xtabond2 l(0/1).y s n yr3-yr26, gmm(s l.y) iv(n yr3-yr26) noleveleq r
 ```
 
-### 4.23
+### 연습 4.23
 
 ```stata
-// continue
+* continue
 xtdpdsys y n yr3-yr26, pre(s) vce(r)
 ```
 
-### 4.24
+### 연습 4.24
 
 ```stata
 use growth-ex, clear
 by id: egen lny0 = total(lny / (year==0)), missing
 ```
 
-### 4.25
+## 4.5 임의효과 동태패널 모형
+
+### 연습 4.25
 
 ```stata
 use growth-ex, clear
@@ -584,7 +648,9 @@ forvalue k = 1/10 {
 xtreg lny x1 lny1 x1_1-x1_10 lny0, mle
 ```
 
-### 4.26
+## 4.6 특수한 경우
+
+### 연습 4.26
 
 ```stata
 use growth-ex, clear
@@ -592,7 +658,7 @@ qui tab year, gen(yr)
 xtdpdsys lny x1 yr3-yr11, pre(x2) endo(x3) two vce(r)
 ```
 
-### 4.27
+### 연습 4.27
 
 ```stata
 use growth-ex, clear
@@ -601,7 +667,7 @@ xtdpdsys lny x1 yr2-yr11, pre(x2) endo(x3) two vce(r)
 xtdpdsys lny x1 yr4-yr11, pre(x2) endo(x3) two vce(r)
 ```
 
-### 4.29
+### 연습 4.29
 
 ```stata
 use growth-ex, clear
@@ -611,7 +677,7 @@ xtdpd l(0/1).lny x1 x2 x3 yr3-yr11, dgmm(x2, lag(1 .)) dgmm(lny x3) ///
   div(x1 yr3-yr11) hascons vce(r)
 ```
 
-### 4.30
+### 연습 4.30
 
 ```stata
 use growth-ex, clear
@@ -621,7 +687,7 @@ xtdpd l(0/1).lny x1 x2 x3 yr3-yr11, dgmm(x2, lag(1 .)) dgmm(lny x3) ///
    div(x1 yr3-yr11) lgmm(x2, lag(0)) lgmm(lny x3) hascons vce(r)
 ```
 
-### 4.31
+### 연습 4.31
 
 ```stata
 use growth-ex, clear
@@ -631,7 +697,7 @@ xtdpd growth l.lny x1 x2 x3 yr3-yr11, dgmm(x2, lag(1 .)) dgmm(lny x3) ///
    div(x1 yr3-yr11) lgmm(x2, lag(0)) lgmm(lny x3) hascons vce(r) two
 ```
 
-### 4.32
+### 연습 4.32
 
 ```stata
 use growth-ex, clear
@@ -641,7 +707,7 @@ xtabond2 l(0/1).lny x1 x2 x3 yr3-yr11, gmm(x2 l.(lny x3)) ///
    iv(x1 yr3-yr11) noleveleq r
 ```
 
-### 4.33
+### 연습 4.33
 
 ```stata
 use growth-ex, clear
@@ -651,7 +717,7 @@ xtabond2 l(0/1).lny x1 x2 x3 yr3-yr11, gmm(x2 l.(lny x3)) ///
    iv(x1 yr3-yr11, eq(d)) h(2) r
 ```
 
-### 4.34
+### 연습 4.34
 
 ```stata
 use growth-ex, clear
@@ -660,7 +726,11 @@ xtabond2 growth l.lny x1 x2 x3 yr3-yr11, gmm(x2 l.(lny x3)) ///
    iv(x1 yr3-yr11, eq(d)) h(2) r two
 ```
 
-### 5.1
+# Part II 비선형 패널 모형
+
+# 5. 모집단평균 모형과 개체별 모형
+
+### 연습 5.1
 
 ```stata
 use union, clear
@@ -671,7 +741,7 @@ xtreg ${model}, re vce(r)
 xtreg ${model}, pa corr(exc) vce(r)
 ```
 
-### 5.2
+### 연습 5.2
 
 ```stata
 use union, clear
@@ -682,7 +752,9 @@ xtprobit ${model}, re
 xtprobit ${model}, pa corr(exc)
 ```
 
-### 6.1
+# 6. 이항반응모형
+
+### 연습 6.1
 
 ```stata
 use lfp, clear
@@ -698,7 +770,7 @@ probit lfp kids lhinc ${z} i.period, vce(cl id)
 xtprobit lfp kids lhinc ${z} i.period, pa corr(ind)
 ```
 
-### 6.2
+### 연습 6.2
 
 계속
 
@@ -706,7 +778,7 @@ xtprobit lfp kids lhinc ${z} i.period, pa corr(ind)
 xtprobit lfp kids lhinc ${z} i.period, pa corr(exc)
 ```
 
-### 6.3
+### 연습 6.3
 
 계속
 
@@ -716,13 +788,13 @@ xtprobit lfp kids lhinc ${z} i.period, pa corr(exc) vce(r)
 
 계속
 
-### 6.4
+### 연습 6.4
 
 ```stata
 xtprobit lfp kids lhinc ${z} i.period, re
 ```
 
-### 6.5
+### 연습 6.5
 
 ```stata
 use union, clear
@@ -751,7 +823,7 @@ foreach v of varlist not_smsa_* {
 xtprobit ${model} *_bar not_smsa_*, re
 ```
 
-### 6.6
+### 연습 6.6
 
 ```stata
 use lfp, clear
@@ -763,7 +835,7 @@ by id: egen lhincbar = mean(lhinc)
 xtprobit lfp kids lhinc kidsbar lhincbar ${z} i.period, re
 ```
 
-### 6.7
+### 연습 6.7
 
 ```stata
 use vv98, clear
@@ -775,7 +847,7 @@ xtprobit union mar l.union mar_* union80 school black i.year, re
 // coef on mar = .168908
 ```
 
-### 6.8
+### 연습 6.8
 
 ```stata
 use lfp, clear
@@ -792,7 +864,7 @@ xtprobit lfp l.lfp kids lhinc educ black age agesq lfp1 kids_* lhinc_* i.period,
 // coef of l.lfp = 1.543212
 ```
 
-### 6.9
+### 연습 6.9
 
 ```stata
 use union, clear
