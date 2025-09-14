@@ -418,6 +418,8 @@ testparm *_bar
 
 ### 연습 2.39 앞
 
+다음에서는 `local` 매크로를 사용하므로 `do` 파일에서만 작동. 명령창에서 복사/붙여넣기로 사용하려면 매크로를 `local` 대신에 `global`로 정의하고 `$model`과 같이 사용.
+
 ```stata
 use gasoline, clear
 local model "lgaspcar lincomep lrpmg lcarpcap"
@@ -426,6 +428,8 @@ xtreg `model', pa c(ind)
 xtreg `model', re
 xtreg `model', pa c(exc)
 ```
+
+## 2.5 강외생성하 추정과 관련된 심화주제들
 
 ### 연습 2.44 앞
 
