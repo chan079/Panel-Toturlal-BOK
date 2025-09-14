@@ -151,6 +151,8 @@ foreach v of varlist gsp hwy water util pc emp {
 save munnell90, replace
 ```
 
+# Part I 선형패널모형
+
 # 2. 선형패널모형과 추정
 
 ## 2.1 선형패널모형
